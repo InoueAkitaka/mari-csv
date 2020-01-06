@@ -9,4 +9,6 @@
 
 	// ファイル出力
 	readfile($filepath);
+
+	echo $_GET['page'];
 ?>
