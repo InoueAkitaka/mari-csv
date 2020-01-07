@@ -1,8 +1,9 @@
 <?php
 	$userId = $_GET['page'];
 
+	echo $userId;
 
-
+	$dbh = dbConnection::getConnection();
 
 
 // linebotのDBに接続
