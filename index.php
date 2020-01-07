@@ -5,6 +5,8 @@
 
 	$dbh = dbConnection::getConnection();
 	$sql = 'select * from ' . M_USER . ' where ? = pgp_sym_decrypt(user_secret_id, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+	$sth = $dbh->prepare($sql);
+	$sth->execute(array($userId));
 
 // linebotのDBに接続
 // 環境変数(getenv)はherokuのappに記載する必要がある
