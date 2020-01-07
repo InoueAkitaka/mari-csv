@@ -1,4 +1,9 @@
 <?php
+
+// テーブル定義
+define('M_USER', 'm_line_user_data');
+define('T_TIME', 't_line_time_card');
+
 	$userId = $_GET['page'];
 
 	echo $userId;
