@@ -8,6 +8,14 @@
 	$sth = $dbh->prepare($sql);
 	$sth->execute(array($userId));
 
+	// データが存在しない場合はNULL
+	if (!($row = $sth->fetch())) {
+		echo 'データの取得に失敗しました' . $userId;
+	}
+	else {
+		echo json_decode($row['user_srg']);
+	}
+
 // linebotのDBに接続
 // 環境変数(getenv)はherokuのappに記載する必要がある
 class dbConnection {
