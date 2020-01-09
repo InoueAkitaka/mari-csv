@@ -23,16 +23,11 @@ define('T_TIME', 't_line_time_card');
 		$sth = $dbh->prepare($sql);
 		$sth->execute(array($userSrg, '2019/12/01', '2019/12/31'));
 
-		// データが存在しない場合はNULL
-		if (!($row = $sth->fetch())) {
-			echo 'データの取得に失敗しました';
-		}
-
 		foreach($export_header as $data){
 			fputcsv($fp, $data);
 		}
 
-		while($row = $sth->fetch()){
+		while($row = $sth->fetch(PDO::FETCH_ASSOC)){
 			fputcsv($fp, $row);
 		}
 
