@@ -101,7 +101,7 @@ class dbConnection {
 	<form action="" method="post">
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
-		<input type="hidden" name="userData" value="<?php $userSrg; ?>">
+		<input type="hidden" name="userData" value="<?php echo $userSrg; ?>">
 	</form>
 	<p>test</p>
 </body>
