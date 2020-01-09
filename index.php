@@ -21,41 +21,35 @@ define('T_TIME', 't_line_time_card');
 		$dbh = dbConnection::getConnection();
 		$sql = 'select stamp_date, attend_time, leave_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
 		$sth = $dbh->prepare($sql);
-		$sth->execute(array($userSrg, '2020/01/01', '2020/01/31'));
+		$sth->execute(array($userSrg, '2019/12/01', '2019/12/31'));
 
 		// データが存在しない場合はNULL
 		if (!($row = $sth->fetch())) {
 			echo 'データの取得に失敗しました';
 		}
 
-		$file_path = "customer.csv";
-		$file = new SplFileObject($file_path, "w");
-
 		foreach($export_header as $data){
-			fputcsv($file, $data);
+			fputcsv($fp, $data);
 		}
 
-		//$file->fputcsv($export_header);
-
 		while($row = $sth->fetch()){
-			fputcsv($file, $row);
-			//$file->fputcsv($row);
+			fputcsv($fp, $row);
 		}
 
 		header('Content-Type: text/csv');
-		header("Content-Disposition: attachment; filename=" .$file_path);
+		header("Content-Disposition: attachment; filename=hoge.csv");
 
 		//ファイルポインタを先頭へ
-		//rewind($fp);
+		rewind($fp);
 		//リソースを読み込み文字列取得
-		//$csv = stream_get_contents($fp);
+		$csv = stream_get_contents($fp);
 
 		//CSVをエクセルで開くことを想定して文字コードをSJIS-winSJISへ
 		//$csv = mb_convert_encoding($csv,'SJIS-win','utf8');
 
-		print $file;
+		print $csv;
 
-		//fclose($fp);
+		fclose($fp);
 		exit();
 	}
 
