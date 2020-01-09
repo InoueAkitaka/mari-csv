@@ -6,6 +6,8 @@ define('T_TIME', 't_line_time_card');
 
 	if ( $_POST['mode'] === 'download' ) {
 		echo 'testtesttest';
+		
+		echo $_POST['userData'];
 		//メモリ上に領域確保
 		$fp = fopen('php://temp/maxmemory:'.(5*1024*1024),'r+');
 
@@ -29,7 +31,7 @@ define('T_TIME', 't_line_time_card');
 		$csv = stream_get_contents($fp);
 
 		//CSVをエクセルで開くことを想定して文字コードをSJIS-winSJISへ
-		$csv = mb_convert_encoding($csv,'SJIS-win','utf8');
+		//$csv = mb_convert_encoding($csv,'SJIS-win','utf8');
 
 		print $csv;
 
@@ -53,7 +55,7 @@ define('T_TIME', 't_line_time_card');
 	else {
 		echo json_decode($row['user_srg']);
 		
-		
+		$userSrg = json_decode($row['user_srg']);
 	}
 
 // linebotのDBに接続
@@ -99,6 +101,7 @@ class dbConnection {
 	<form action="" method="post">
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
+		<input type="hidden" name="userData" value="<?php $userSrg; ?>">
 	</form>
 	<p>test</p>
 </body>
