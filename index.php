@@ -38,7 +38,7 @@ define('T_TIME', 't_line_time_card');
 				$csv_data.= $data[$i]['fruit'].','.$data[$i]['price']."\n";
 			}
 			//出力ファイル名の作成
-			$csv_file = "csv_". date ( "Ymd" ) .'.csv';
+			$csv_file = 'download.csv';
 		  
 			//文字化けを防ぐ
 			$csv_data = mb_convert_encoding ( $csv_data , "sjis-win" , 'utf-8' );
@@ -46,7 +46,7 @@ define('T_TIME', 't_line_time_card');
 			//MIMEタイプの設定
 			header("Content-Type: application/octet-stream");
 			//名前を付けて保存のダイアログボックスのファイル名の初期値
-			header("Content-Disposition: attachment; filename={$csv_file}");
+			header("Content-Disposition: attachment; filename=download.csv");
 		  
 			// データの出力
 			echo($csv_data);
