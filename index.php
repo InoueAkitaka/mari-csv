@@ -5,21 +5,40 @@ define('M_USER', 'm_line_user_data');
 define('T_TIME', 't_line_time_card');
 
 	if ( $_POST['mode'] === 'download' ) {
-		echo 'testtesttest';
+		//echo 'testtesttest';
 		
-		echo $_POST['userData'];
+		$userSrg =  $_POST['userData'];
 		//メモリ上に領域確保
 		$fp = fopen('php://temp/maxmemory:'.(5*1024*1024),'r+');
 
-		$user_list = [
-			['ID', '名前', '年齢'],
-			['1', '田中', '30'],
-			['2', '小林', '26'],
-			['3', '江口', '32']
-		];
+		$export_csv_title = ["日付", "出勤時間", "退勤時間"]; //ヘッダー項目
 
-		foreach($user_list as $user){
-		  fputcsv($fp, $user);
+		foreach( $export_csv_title as $key => $val ){
+
+			$export_header[] = $val;
+		}
+
+		$dbh = dbConnection::getConnection();
+		$sql = 'select stamp_date, attend_time, leave_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
+		$sth = $dbh->prepare($sql);
+		$sth->execute(array($userSrg, '2020/01/01', '2020/01/31'));
+
+		// データが存在しない場合はNULL
+		if (!($row = $sth->fetch())) {
+			echo 'データの取得に失敗しました' . $userId;
+		}
+		else {
+			echo json_decode($row['user_srg']);
+			
+			$userSrg = json_decode($row['user_srg']);
+		}
+
+		foreach($export_header as $data){
+		  fputcsv($fp, $data);
+		}
+
+		while($row = $sth->fetch(PDO::FETCH_ASSOC)){
+			fputcsv($fp, $row);
 		}
 
 		header('Content-Type: text/csv');
