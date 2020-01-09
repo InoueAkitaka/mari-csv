@@ -24,6 +24,7 @@ define('T_TIME', 't_line_time_card');
 	}
 
 	if ( $_POST['mode'] === 'download' ) {
+		echo 'testtesttest';
 		//メモリ上に領域確保
 		$fp = fopen('php://temp/maxmemory:'.(5*1024*1024),'r+');
 
