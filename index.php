@@ -28,28 +28,34 @@ define('T_TIME', 't_line_time_card');
 			echo 'データの取得に失敗しました';
 		}
 
-		foreach($export_header as $data){
-		  fputcsv($fp, $data);
-		}
+		$file_path = "customer.csv";
+		$file = new SplFileObject($file_path, "w");
 
-		while($row = $sth->fetch(PDO::FETCH_ASSOC)){
-			fputcsv($fp, $row);
+		//foreach($export_header as $data){
+			//fputcsv($fp, $data);
+		//}
+
+		$file->fputcsv($export_header);
+
+		while($row = $sth->fetch()){
+			//fputcsv($fp, $row);
+			$file->fputcsv($row);
 		}
 
 		header('Content-Type: text/csv');
-		header("Content-Disposition: attachment; filename=hoge.csv");
+		header("Content-Disposition: attachment; filename=" .$file_path);
 
 		//ファイルポインタを先頭へ
-		rewind($fp);
+		//rewind($fp);
 		//リソースを読み込み文字列取得
-		$csv = stream_get_contents($fp);
+		//$csv = stream_get_contents($fp);
 
 		//CSVをエクセルで開くことを想定して文字コードをSJIS-winSJISへ
 		//$csv = mb_convert_encoding($csv,'SJIS-win','utf8');
 
-		print $csv;
+		print $file;
 
-		fclose($fp);
+		//fclose($fp);
 		exit();
 	}
 
