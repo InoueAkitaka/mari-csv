@@ -24,33 +24,34 @@ define('T_TIME', 't_line_time_card');
 	}
 
 	if ( $_POST['mode'] === 'download' ) {
-			//仮のデータ
-			$data[0]['fruit'] = "オレンジ";
-			$data[0]['price'] = "100円";
-			$data[1]['fruit'] = "グレープ";
-			$data[1]['price'] = "200円";
-			$data[2]['fruit'] = "桃";
-			$data[2]['price'] = "300円";
-			  
-			//配列にデータが入っている場合は1行の文字列にしてカンマ区切りのデータにしましょう
-			//末尾は改行コードで。''じゃなく、""でくくりましょう。
-			for ( $i = 0 ; $i < count ( $data ) ; $i ++ ) {
-				$csv_data.= $data[$i]['fruit'].','.$data[$i]['price']."\n";
-			}
-			//出力ファイル名の作成
-			$csv_file = 'download.csv';
-		  
-			//文字化けを防ぐ
-			$csv_data = mb_convert_encoding ( $csv_data , "sjis-win" , 'utf-8' );
-			  
-			//MIMEタイプの設定
-			header("Content-Type: application/octet-stream");
-			//名前を付けて保存のダイアログボックスのファイル名の初期値
-			header("Content-Disposition: attachment; filename=download.csv");
-		  
-			// データの出力
-			echo($csv_data);
-			exit();
+		//メモリ上に領域確保
+		$fp = fopen('php://temp/maxmemory:'.(5*1024*1024),'r+');
+
+		$user_list = [
+			['ID', '名前', '年齢'],
+			['1', '田中', '30'],
+			['2', '小林', '26'],
+			['3', '江口', '32']
+		];
+
+		foreach($user_list as $user){
+		  fputcsv($fp, $user);
+		}
+
+		header('Content-Type: text/csv');
+		header("Content-Disposition: attachment; filename=hoge.csv");
+
+		//ファイルポインタを先頭へ
+		rewind($fp);
+		//リソースを読み込み文字列取得
+		$csv = stream_get_contents($fp);
+
+		//CSVをエクセルで開くことを想定して文字コードをSJIS-winSJISへ
+		$csv = mb_convert_encoding($csv,'SJIS-win','utf8');
+
+		print $csv;
+
+		fclose($fp);
 	}
 
 // linebotのDBに接続
