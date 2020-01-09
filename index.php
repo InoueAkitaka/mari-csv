@@ -29,7 +29,7 @@ define('T_TIME', 't_line_time_card');
 		$csv = stream_get_contents($fp);
 
 		//CSVをエクセルで開くことを想定して文字コードをSJIS-winSJISへ
-		//$csv = mb_convert_encoding($csv,'SJIS-win','utf8');
+		$csv = mb_convert_encoding($csv,'SJIS-win','utf8');
 
 		print $csv;
 
