@@ -13,7 +13,7 @@ define('T_TIME', 't_line_time_card');
 
 		$export_csv_title = ["日付", "出勤時間", "退勤時間"]; //ヘッダー項目
 
-		foreach( $export_csv_title as $key => $val ){
+		foreach($export_csv_title as $key => $val){
 
 			$export_header[] = $val;
 		}
@@ -25,12 +25,7 @@ define('T_TIME', 't_line_time_card');
 
 		// データが存在しない場合はNULL
 		if (!($row = $sth->fetch())) {
-			echo 'データの取得に失敗しました' . $userId;
-		}
-		else {
-			echo json_decode($row['user_srg']);
-			
-			$userSrg = json_decode($row['user_srg']);
+			echo 'データの取得に失敗しました';
 		}
 
 		foreach($export_header as $data){
