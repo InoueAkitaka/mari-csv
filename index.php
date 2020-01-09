@@ -31,15 +31,15 @@ define('T_TIME', 't_line_time_card');
 		$file_path = "customer.csv";
 		$file = new SplFileObject($file_path, "w");
 
-		//foreach($export_header as $data){
-			//fputcsv($fp, $data);
-		//}
+		foreach($export_header as $data){
+			fputcsv($file, $data);
+		}
 
-		$file->fputcsv($export_header);
+		//$file->fputcsv($export_header);
 
 		while($row = $sth->fetch()){
-			//fputcsv($fp, $row);
-			$file->fputcsv($row);
+			fputcsv($file, $row);
+			//$file->fputcsv($row);
 		}
 
 		header('Content-Type: text/csv');
