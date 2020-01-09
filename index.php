@@ -19,6 +19,38 @@ define('T_TIME', 't_line_time_card');
 	}
 	else {
 		echo json_decode($row['user_srg']);
+		
+		
+	}
+
+	if ( $_POST['mode'] === 'download' ) {
+			//仮のデータ
+			$data[0]['fruit'] = "オレンジ";
+			$data[0]['price'] = "100円";
+			$data[1]['fruit'] = "グレープ";
+			$data[1]['price'] = "200円";
+			$data[2]['fruit'] = "桃";
+			$data[2]['price'] = "300円";
+			  
+			//配列にデータが入っている場合は1行の文字列にしてカンマ区切りのデータにしましょう
+			//末尾は改行コードで。''じゃなく、""でくくりましょう。
+			for ( $i = 0 ; $i < count ( $data ) ; $i ++ ) {
+				$csv_data.= $data[$i]['fruit'].','.$data[$i]['price']."\n";
+			}
+			//出力ファイル名の作成
+			$csv_file = "csv_". date ( "Ymd" ) .'.csv';
+		  
+			//文字化けを防ぐ
+			$csv_data = mb_convert_encoding ( $csv_data , "sjis-win" , 'utf-8' );
+			  
+			//MIMEタイプの設定
+			header("Content-Type: application/octet-stream");
+			//名前を付けて保存のダイアログボックスのファイル名の初期値
+			header("Content-Disposition: attachment; filename={$csv_file}");
+		  
+			// データの出力
+			echo($csv_data);
+			exit();
 	}
 
 // linebotのDBに接続
@@ -59,4 +91,12 @@ class dbConnection {
 }
 ?>
 
-<p>test</p>
+<html>
+<body>
+	<form action="" method="post">
+		<input type="submit" value="csvダウンロード"><br />
+		<input type="hidden" name="mode" value="download">
+	</form>
+	<p>test</p>
+</body>
+</html>
