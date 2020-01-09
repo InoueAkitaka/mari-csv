@@ -4,25 +4,6 @@
 define('M_USER', 'm_line_user_data');
 define('T_TIME', 't_line_time_card');
 
-	$userId = $_GET['page'];
-
-	echo $userId;
-
-	$dbh = dbConnection::getConnection();
-	$sql = 'select * from ' . M_USER . ' where ? = pgp_sym_decrypt(user_secret_id, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
-	$sth = $dbh->prepare($sql);
-	$sth->execute(array($userId));
-
-	// データが存在しない場合はNULL
-	if (!($row = $sth->fetch())) {
-		echo 'データの取得に失敗しました' . $userId;
-	}
-	else {
-		echo json_decode($row['user_srg']);
-		
-		
-	}
-
 	if ( $_POST['mode'] === 'download' ) {
 		echo 'testtesttest';
 		//メモリ上に領域確保
@@ -53,6 +34,26 @@ define('T_TIME', 't_line_time_card');
 		print $csv;
 
 		fclose($fp);
+		exit();
+	}
+
+	$userId = $_GET['page'];
+
+	echo $userId;
+
+	$dbh = dbConnection::getConnection();
+	$sql = 'select * from ' . M_USER . ' where ? = pgp_sym_decrypt(user_secret_id, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+	$sth = $dbh->prepare($sql);
+	$sth->execute(array($userId));
+
+	// データが存在しない場合はNULL
+	if (!($row = $sth->fetch())) {
+		echo 'データの取得に失敗しました' . $userId;
+	}
+	else {
+		echo json_decode($row['user_srg']);
+		
+		
 	}
 
 // linebotのDBに接続
