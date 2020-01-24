@@ -118,7 +118,7 @@ class dbConnection {
  */
 function ceilPerTime($per){
 
-        $deteObj = new DateTime('H:i:s');
+        $deteObj = new DateTime();
         // 指定された単位で切り上げる
         // フォーマット文字 i だと、 例えば1分が 2桁の 01 となる(1桁は無い）ので、整数に変換してから切り上げる
         $ceil_num = ceil(sprintf('%d', $deteObj->format('i'))/$per) *$per;
