@@ -5,9 +5,9 @@ define('M_USER', 'm_line_user_data');
 define('T_TIME', 't_line_time_card');
 
 // 時間を切り上げる
-$nowEditTime = ceilPerTime(strtotime(date("H:i:s")), 15);
+//$nowEditTime = ceilPerTime(strtotime(date("H:i:s")), 15);
 
-echo $nowEditTime;
+echo strtotime(date("H:i:s"));
 
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
