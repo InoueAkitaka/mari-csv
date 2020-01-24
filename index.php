@@ -8,6 +8,7 @@ define('T_TIME', 't_line_time_card');
 //$nowEditTime = ceilPerTime(strtotime(date("H:i:s")), 15);
 
 echo strtotime(date("H:i:s"));
+echo 'test';
 
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
