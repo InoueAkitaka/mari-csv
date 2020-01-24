@@ -7,7 +7,7 @@ define('T_TIME', 't_line_time_card');
 // 時間を切り上げる
 //$nowEditTime = ceilPerTime(strtotime(date("H:i:s")), 15);
 
-echo ceilPerTime(date("H:i:s"), 15);
+echo ceilPerTime(15);
 echo 'test';
 
 	if ( $_POST['mode'] === 'download' ) {
@@ -113,17 +113,12 @@ class dbConnection {
 /**
  * 時間(hhmm)を指定した分単位で切り上げる
  * 
- * @param $time 時間と分の文字列(1130, 11:30など)
  * @param $per 切り上げる単位(分) 5分なら5
  * @return false or 切り上げられた DateTime オブジェクト(->fomat で自由にフォーマットして使用する)
  */
-function ceilPerTime($time, $per){
+function ceilPerTime($per){
 
-    // 値がない時、単位が0の時は false を返して終了する
-    if( !isset($time) || !is_numeric($per) || ($per == 0 )) {
-        return false;
-    }else{
-        $deteObj = new DateTime($time);
+        $deteObj = new DateTime('H:i:s');
         // 指定された単位で切り上げる
         // フォーマット文字 i だと、 例えば1分が 2桁の 01 となる(1桁は無い）ので、整数に変換してから切り上げる
         $ceil_num = ceil(sprintf('%d', $deteObj->format('i'))/$per) *$per;
@@ -139,7 +134,6 @@ function ceilPerTime($time, $per){
         $have = $hour.sprintf( '%02d', $ceil_num );
 
         return new DateTime($have);
-    }
 }
 
 /**
