@@ -24,10 +24,16 @@ echo 'test';
 			$export_header[] = $val;
 		}
 
+		// 前月一日
+		$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
+
+		// 前月末日
+		$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
+
 		$dbh = dbConnection::getConnection();
 		$sql = 'select stamp_date, attend_time, leave_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
 		$sth = $dbh->prepare($sql);
-		$sth->execute(array($userSrg, '2019/12/01', '2019/12/31'));
+		$sth->execute(array($userSrg, $startDate, $endDate));
 
 		foreach($export_header as $data){
 			fputcsv($fp, $data);
