@@ -3,43 +3,11 @@
 define('M_USER', 'm_line_user_data');
 define('T_TIME', 't_line_time_card');
 
-	$userId = $_POST['personPage'];
-	$monthData = $_POST['month'];
-
-	// 前月一日
-	//$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
-
-	// パラメータ月の一日
-	$startDate = date('Y-m-01 00:00:00', strtotime(date($monthData .'/1')));
-
-	// 前月末日
-	//$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
-
-	$endDate = date('Y-m-t 23:59:59', strtotime(date($monthData .'/1')));
-	
-	echo $startDate;
-	echo $endDate;
-
-	$dbh = dbConnection::getConnection();
-	$sql = 'select * from ' . M_USER . ' where ? = pgp_sym_decrypt(user_secret_id, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
-	$sth = $dbh->prepare($sql);
-	$sth->execute(array($userId));
-
-	// データが存在しない場合はNULL
-	if (!($row = $sth->fetch())) {
-		echo 'データの取得に失敗しました' . $userId;
-	}
-	else {
-		//確認用のためコメントアウト
-		//echo json_decode($row['another_user_name']);
-		
-		$userName = json_decode($row['another_user_name']);
-	}
-
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
 		
-		$userSrg =  $_POST['userData'];
+		$startDate =  $_POST['start'];
+		$endDate =  $_POST['end'];
 		//メモリ上に領域確保
 		$fp = fopen('php://temp/maxmemory:'.(5*1024*1024),'r+');
 
@@ -78,6 +46,39 @@ define('T_TIME', 't_line_time_card');
 
 		fclose($fp);
 		exit();
+	} else {
+		$userId = $_POST['personPage'];
+		$monthData = $_POST['month'];
+
+		// 前月一日
+		//$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
+
+		// パラメータ月の一日
+		$startDate = date('Y-m-01 00:00:00', strtotime(date($monthData .'/1')));
+
+		// 前月末日
+		//$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
+
+		$endDate = date('Y-m-t 23:59:59', strtotime(date($monthData .'/1')));
+		
+		echo $startDate;
+		echo $endDate;
+
+		$dbh = dbConnection::getConnection();
+		$sql = 'select * from ' . M_USER . ' where ? = pgp_sym_decrypt(user_secret_id, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+		$sth = $dbh->prepare($sql);
+		$sth->execute(array($userId));
+
+		// データが存在しない場合はNULL
+		if (!($row = $sth->fetch())) {
+			echo 'データの取得に失敗しました' . $userId;
+		}
+		else {
+			//確認用のためコメントアウト
+			//echo json_decode($row['another_user_name']);
+			
+			$userName = json_decode($row['another_user_name']);
+		}
 	}
 
 // linebotのDBに接続
@@ -129,7 +130,7 @@ class dbConnection {
 		</style>
 	</head>
 <body>
-	<h2><?php echo $username. "_勤務時間一覧" ?></h2>
+	<h2><?php echo $userName. "_勤務時間一覧" ?></h2>
 <?php 
 	$dbh = dbConnection::getConnection();
 	$sql = 'select stamp_date, attend_edit_time, leave_edit_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
@@ -169,7 +170,18 @@ class dbConnection {
 				<?php echo $arrData; ?>
 			</table>
 		</div>
-		<button type='submit' name='mode' value='download'><?php echo $username. "_CSVダウンロード" ?></button>
+		<button type='submit' name='mode' value='download'><?php echo $userName. "_CSVダウンロード" ?></button>
+		<input type='hidden' name='start' value='<?php $startDate; ?>'>
+		<input type='hidden' name='end' value='<?php $endDate; ?>'>
 	</form>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
