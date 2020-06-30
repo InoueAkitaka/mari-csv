@@ -69,6 +69,8 @@ define('T_TIME', 't_line_time_card');
 	echo $startDate;
 	echo $endDate;
 
+	$userName = "テストユーザ1";
+
 // linebotのDBに接続
 // 環境変数(getenv)はherokuのappに記載する必要がある
 class dbConnection {
@@ -159,8 +161,8 @@ class dbConnection {
 			</table>
 		</div>
 		<button type='submit' name='mode' value='download'><?php echo $userName. "_CSVダウンロード" ?></button>
-		<input type='hidden' name='startPrm' value='<?php $startDate; ?>'>
-		<input type='hidden' name='endPrm' value='<?php $endDate; ?>'>
+		<input type='hidden' name='startPrm' value='<?php echo $startDate; ?>'>
+		<input type='hidden' name='endPrm' value='<?php echo $endDate; ?>'>
 		<input type="hidden" name="userData" value="<?php echo $userSrg; ?>">
 	</form>
 </body>
