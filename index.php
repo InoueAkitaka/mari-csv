@@ -247,7 +247,8 @@ function floorPerTime($time, $per){
 			$arrData .= "<td>". $row['another_user_name']. "</td>";
 			$arrData .= "<td>". $row['work_time']. "</td>";
 			$arrData .= "<td>". $row['work_day']. "</td>";
-			$arrData .= "<td><input id='test' type='button' value='" . $row['another_user_name'] . "_勤務表' onclick='window.open(url,'_blank')'></td>";
+			$arrData .= "<button type='submit' name='personPage' value='" . $row['user_srg'] . "'>" . $row['another_user_name'] . "_勤務表</button>";
+			//$arrData .= "<td><input id='test' type='button' value='" . $row['another_user_name'] . "_勤務表' onclick='window.open(url,'_blank')'></td>";
 			$arrData .= "</tr>";
 		}
 	}

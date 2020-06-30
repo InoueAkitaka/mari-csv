@@ -4,7 +4,7 @@ define('M_USER', 'm_line_user_data');
 define('T_TIME', 't_line_time_card');
 
 	if ( $_POST['mode'] === 'download' ) {
-		//echo 'testtesttest';
+		echo 'testtesttest';
 		
 		$userSrg =  $_POST['userData'];
 		$startDate =  $_POST['start'];
@@ -52,6 +52,8 @@ define('T_TIME', 't_line_time_card');
 	$userSrg = $_POST['personPage'];
 	$monthData = $_POST['month'];
 
+	echo "</br>" . $userSrg;
+	echo "</br>" . $monthData . "</br>";
 	// 前月一日
 	//$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
 
@@ -61,6 +63,7 @@ define('T_TIME', 't_line_time_card');
 	// 前月末日
 	//$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
 
+	// パラメータ月の末日
 	$endDate = date('Y-m-t 23:59:59', strtotime(date($monthData .'/1')));
 	
 	echo $startDate;
