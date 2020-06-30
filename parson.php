@@ -158,10 +158,6 @@ class dbConnection {
 	}
 ?>
 	<form action="" method="post">
-		稼働年月：<select name="month">
-			<?php echo $arrMonth; ?>
-		</select>
-		
 		<div id="work-table">
 			<table width="100%">
 				<tr>
