@@ -193,7 +193,6 @@ function floorPerTime($time, $per){
 <body>
 	<form action="" method="post">
 		<select>
-			<option>テスト</option>
 			<?php $age_data ?>
 		</select>
 		<input type="submit" value="csvダウンロード"><br />
