@@ -15,7 +15,7 @@ $sql = 'select to_char(stamp_date, \'yyyy/mm\') work_month from t_line_time_card
 $sth = $dbh->prepare($sql);
 $sth->execute();
 
-$age_data = ['young'=>'10代～20代','middle'=>'30代～50代','senior'=>'60代以上'];
+$age_data = array('young'=>'10代～20代','middle'=>'30代～50代','senior'=>'60代以上');
 
 // ②配列のデータをoptionタグに整形
 foreach($age_data as $age_data_key => $age_data_val){
@@ -187,7 +187,7 @@ function floorPerTime($time, $per){
 <body>
 	<form action="" method="post">
 		<select>
-			<?php $age_data ?>
+			<?php $age_data; ?>
 		</select>
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
