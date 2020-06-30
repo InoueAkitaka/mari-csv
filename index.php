@@ -10,12 +10,10 @@ define('T_TIME', 't_line_time_card');
 //echo ceilPerTime(15);
 echo 'test';
 
-$stmt = $pdo->query('SELECT * FROM テーブル');
-
 $dbh = dbConnection::getConnection();
 $sql = 'select to_char(stamp_date, 'yyyymm') work_month from t_line_time_card group by to_char(stamp_date, 'yyyymm') order by work_month desc';
 $sth = $dbh->prepare($sql);
-$sth->execute(array($userSrg, $startDate, $endDate));
+$sth->execute();
 
 
 	if ( $_POST['mode'] === 'download' ) {
