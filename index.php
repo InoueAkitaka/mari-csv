@@ -11,7 +11,7 @@ define('T_TIME', 't_line_time_card');
 echo 'test';
 
 $dbh = dbConnection::getConnection();
-$sql = 'select to_char(stamp_date, \'yyyymm\') work_month from t_line_time_card group by to_char(stamp_date, \'yyyymm\') order by work_month desc';
+$sql = 'select to_char(stamp_date, \'yyyy/mm\') work_month from t_line_time_card group by to_char(stamp_date, \'yyyy/mm\') order by work_month desc';
 $sth = $dbh->prepare($sql);
 $sth->execute();
 
@@ -181,6 +181,7 @@ function floorPerTime($time, $per){
 	<form action="" method="post">
 		<select>
 			<option>テスト</option>
+			<?php while($row = $sth->fetch(PDO::FETCH_ASSOC)){ echo '<option>'.htmlspecialchars($row['work_month']).'</option>' }; ?>
 		</select>
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
