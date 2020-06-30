@@ -65,7 +65,7 @@ define('T_TIME', 't_line_time_card');
 		echo $endDate;
 
 		$dbh = dbConnection::getConnection();
-		$sql = 'select * from ' . M_USER . ' where ? = pgp_sym_decrypt(user_secret_id, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+		$sql = 'select * from ' . M_USER . ' where user_srg = ?';
 		$sth = $dbh->prepare($sql);
 		$sth->execute(array($userId));
 
