@@ -173,7 +173,10 @@ function floorPerTime($time, $per){
 	<head>
 		<meta charset=“UFT-8”>
 		<style>
-			
+			#work-table table,#work-table td,#work-table th {
+				border-collapse: collapse;
+				border:1px solid #333;
+			}
 		</style>
 	</head>
 <body>
