@@ -3,42 +3,10 @@
 define('M_USER', 'm_line_user_data');
 define('T_TIME', 't_line_time_card');
 
-	$userId = $_POST['personPage'];
-	$monthData = $_POST['month'];
-
-	// 前月一日
-	//$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
-
-	// パラメータ月の一日
-	$startDate = date('Y-m-01 00:00:00', strtotime(date($monthData .'/1')));
-
-	// 前月末日
-	//$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
-
-	$endDate = date('Y-m-t 23:59:59', strtotime(date($monthData .'/1')));
-	
-	echo $startDate;
-	echo $endDate;
-
-	$dbh = dbConnection::getConnection();
-	$sql = 'select * from ' . M_USER . ' where user_srg = ?';
-	$sth = $dbh->prepare($sql);
-	$sth->execute(array($userId));
-
-	// データが存在しない場合はNULL
-	if (!($row = $sth->fetch())) {
-		echo 'データの取得に失敗しました' . $userId;
-	}
-	else {
-		//確認用のためコメントアウト
-		//echo json_decode($row['another_user_name']);
-		
-		$userName = json_decode($row['another_user_name']);
-	}
-
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
 		
+		$userSrg =  $_POST['userData'];
 		$startDate =  $_POST['start'];
 		$endDate =  $_POST['end'];
 		//メモリ上に領域確保
@@ -79,6 +47,39 @@ define('T_TIME', 't_line_time_card');
 
 		fclose($fp);
 		exit();
+	}
+
+	$userSrg = $_POST['personPage'];
+	$monthData = $_POST['month'];
+
+	// 前月一日
+	//$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
+
+	// パラメータ月の一日
+	$startDate = date('Y-m-01 00:00:00', strtotime(date($monthData .'/1')));
+
+	// 前月末日
+	//$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
+
+	$endDate = date('Y-m-t 23:59:59', strtotime(date($monthData .'/1')));
+	
+	echo $startDate;
+	echo $endDate;
+
+	$dbh = dbConnection::getConnection();
+	$sql = 'select * from ' . M_USER . ' where user_srg = ?';
+	$sth = $dbh->prepare($sql);
+	$sth->execute(array($userSrg));
+
+	// データが存在しない場合はNULL
+	if (!($row = $sth->fetch())) {
+		echo 'データの取得に失敗しました' . $userId;
+	}
+	else {
+		//確認用のためコメントアウト
+		//echo json_decode($row['another_user_name']);
+		
+		$userName = json_decode($row['another_user_name']);
 	}
 
 // linebotのDBに接続
@@ -173,6 +174,7 @@ class dbConnection {
 		<button type='submit' name='mode' value='download'><?php echo $userName. "_CSVダウンロード" ?></button>
 		<input type='hidden' name='start' value='<?php $startDate; ?>'>
 		<input type='hidden' name='end' value='<?php $endDate; ?>'>
+		<input type="hidden" name="userData" value="<?php echo $userSrg; ?>">
 	</form>
 </body>
 </html>
