@@ -15,7 +15,7 @@ $sql = 'select to_char(stamp_date, \'yyyy/mm\') work_month from t_line_time_card
 $sth = $dbh->prepare($sql);
 $sth->execute();
 
-$age_data = array("young"=>"10代～20代","middle"=>"30代～50代","senior"=>"60代以上");
+$age_data = array("young" => "10代～20代","middle" => "30代～50代","senior" = >"60代以上");
 
 // ②配列のデータをoptionタグに整形
 foreach($age_data as $age_data_key => $age_data_val){
