@@ -30,7 +30,7 @@ define('T_TIME', 't_line_time_card');
 		//メモリ上に領域確保
 		$fp = fopen('php://temp/maxmemory:'.(5*1024*1024),'r+');
 
-		$export_csv_title = ["日付", "出勤時間", "退勤時間"]; //ヘッダー項目
+		$export_csv_title = ["氏名", "月合計勤務時間", "出勤日数"]; //ヘッダー項目
 
 		foreach($export_csv_title as $key => $val){
 
@@ -43,10 +43,15 @@ define('T_TIME', 't_line_time_card');
 		// 前月末日
 		$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
 
+		//$dbh = dbConnection::getConnection();
+		//$sql = 'select stamp_date, attend_time, leave_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
+		//$sth = $dbh->prepare($sql);
+		//$sth->execute(array($userSrg, $startDate, $endDate));
+
 		$dbh = dbConnection::getConnection();
-		$sql = 'select stamp_date, attend_time, leave_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
+		$sql = 'select B.user_srg , B.another_user_name , sum(leave_edit_time) - sum(attend_edit_time) as work_time , count(stamp_date) as work_day from t_line_time_card A inner join m_line_user_data B on A.user_srg = B.user_srg where stamp_date >= \'2018/07/01\' and stamp_date <= \'2018/07/31\' group by B.user_srg, B.another_user_name order by work_time desc';
 		$sth = $dbh->prepare($sql);
-		$sth->execute(array($userSrg, $startDate, $endDate));
+		$sth->execute();
 
 		foreach($export_header as $data){
 			fputcsv($fp, $data);

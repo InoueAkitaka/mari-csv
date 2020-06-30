@@ -64,22 +64,22 @@ define('T_TIME', 't_line_time_card');
 
 	$userName = "テストユーザ1";
 
-	$dbh = dbConnection::getConnection();
-	$sql = 'select * from ' . M_USER . ' where user_id = ?';
-	$sth = $dbh->prepare($sql);
-	$sth->execute(array($userSrg));
+	//$dbh = dbConnection::getConnection();
+	//$sql = 'select * from ' . M_USER . ' where user_id = ?';
+	//$sth = $dbh->prepare($sql);
+	//$sth->execute(array($userSrg));
 
 	// データが存在しない場合はNULL
-	if (!($row = $sth->fetch())) {
-		echo 'データの取得に失敗しました' . $userSrg;
-	}
-	else {
+	//if (!($row = $sth->fetch())) {
+	//	echo 'データの取得に失敗しました' . $userSrg;
+	//}
+	//else {
 		//確認用のためコメントアウト
-		echo "test!!!<br>";
-		echo json_decode($row['another_user_name']);
+		//echo "test!!!<br>";
+		//echo json_decode($row['another_user_name']);
 		
-		$userName = json_decode($row['another_user_name']);
-	}
+		//$userName = json_decode($row['another_user_name']);
+	//}
 
 // linebotのDBに接続
 // 環境変数(getenv)はherokuのappに記載する必要がある
