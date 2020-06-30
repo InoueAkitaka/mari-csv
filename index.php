@@ -218,7 +218,7 @@ function floorPerTime($time, $per){
 		$arrData .= "<td>". $row['another_user_name']. "</td>";
 		$arrData .= "<td>". $row['work_time']. "</td>";
 		$arrData .= "<td>". $row['work_day']. "</td>";
-		$arrData .= "<input id='test' type='button' value='test' onclick='window.open(url,'_blank')'>";
+		$arrData .= "<td><input id='test' type='button' value='test' onclick='window.open(url,'_blank')'></td>";
 		$arrData .= "</tr>";
 
 		while($row = $sth->fetch(PDO::FETCH_ASSOC)){
@@ -226,7 +226,7 @@ function floorPerTime($time, $per){
 			$arrData .= "<td>". $row['another_user_name']. "</td>";
 			$arrData .= "<td>". $row['work_time']. "</td>";
 			$arrData .= "<td>". $row['work_day']. "</td>";
-			$arrData .= "<input id='test' type='button' value='test' onclick='window.open(url,'_blank')'>";
+			$arrData .= "<td><input id='test' type='button' value='test' onclick='window.open(url,'_blank')'></td>";
 			$arrData .= "</tr>";
 		}
 	}
