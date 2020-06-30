@@ -194,7 +194,7 @@ function floorPerTime($time, $per){
 	}
 
 	$dbh = dbConnection::getConnection();
-	$sql = 'select B.user_srg , B.another_user_name , sum(leave_edit_time) - sum(attend_edit_time) as work_time , count(stamp_date) as work_day from t_line_time_card A inner join m_line_user_data B on A.user_srg = B.user_srg where stamp_date >= '2018/07/01' and stamp_date <= '2018/07/31' group by B.user_srg, B.another_user_name order by work_time desc';
+	$sql = 'select B.user_srg , B.another_user_name , sum(leave_edit_time) - sum(attend_edit_time) as work_time , count(stamp_date) as work_day from t_line_time_card A inner join m_line_user_data B on A.user_srg = B.user_srg where stamp_date >= \'2018/07/01\' and stamp_date <= \'2018/07/31\' group by B.user_srg, B.another_user_name order by work_time desc';
 	$sth = $dbh->prepare($sql);
 	$sth->execute();
 
