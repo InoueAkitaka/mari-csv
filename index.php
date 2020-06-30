@@ -8,18 +8,20 @@ define('T_TIME', 't_line_time_card');
 //$nowEditTime = ceilPerTime(strtotime(date("H:i:s")), 15);
 
 //echo ceilPerTime(15);
-
-	if (is_null($_POST['personPage'])){
-
-	} else {
-		switch ($_POST['personPage']) {
-			case $_POST['personPage'] > 0;
-				echo OK;
-			break;
-			
-			default:
-			echo '値がありません。';
-		}	
+	
+	$userParam = 0;
+	
+	if (!is_null($_POST['personPage'])){
+		$userParam = $_POST['personPage'];
+	}
+	
+	switch ($userParam) {
+		case $userParam > 0;
+		echo "OK";
+		break;
+		
+		default:
+		echo "データなし";
 	}
 
 	if ( $_POST['mode'] === 'download' ) {
