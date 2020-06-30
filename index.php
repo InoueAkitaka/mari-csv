@@ -181,7 +181,7 @@ function floorPerTime($time, $per){
 
 	// データが存在しない場合はNULL
 	if (!($row = $sth->fetch())) {
-		echo 'データの取得に失敗しました' . $userId;
+		echo 'データの取得に失敗しました';
 	}
 
 	while($row = $sth->fetch(PDO::FETCH_ASSOC)){
