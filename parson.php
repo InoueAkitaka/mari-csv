@@ -5,6 +5,20 @@
 	$userId = $_GET['personPage'];
 	$monthData = $_GET['month'];
 
+	// 前月一日
+	//$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
+
+	// パラメータ月の一日
+	$startDate = date('Y-m-01 00:00:00', strtotime(date($monthData .'/1')));
+
+	// 前月末日
+	//$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
+
+	$endDate = date('Y-m-t 23:59:59', strtotime(date($monthData .'/1')));
+	
+	echo $startDate;
+	echo $endDate;
+
 	$dbh = dbConnection::getConnection();
 	$sql = 'select * from ' . M_USER . ' where ? = pgp_sym_decrypt(user_secret_id, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
 	$sth = $dbh->prepare($sql);
@@ -20,17 +34,6 @@
 		
 		$userName = json_decode($row['another_user_name']);
 	}
-
-	// 前月一日
-	//$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
-
-	// パラメータ月の一日
-	$startDate = date('Y-m-01 00:00:00', strtotime(date($monthData .'/1')));
-
-	// 前月末日
-	//$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
-
-	$endDate = date('Y-m-t 23:59:59', strtotime(date($monthData .'/1')));
 
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
