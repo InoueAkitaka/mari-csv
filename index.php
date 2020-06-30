@@ -12,7 +12,7 @@ define('T_TIME', 't_line_time_card');
 	$userParam = 0;
 	
 	if (!is_null($_POST['personPage'])){
-		$userParam = $_POST['personPage'];
+		$userParam = intval($_POST['personPage']);
 	}
 	
 	switch ($userParam) {
