@@ -206,9 +206,9 @@ function floorPerTime($time, $per){
 	}
 	else {
 		$arrData .= "<tr>";
-		$arrData .= "<td>". $row['another_user_name']. "</td>;
-		$arrData .= "<td>". $row['work_time']. "</td>;
-		$arrData .= "<td>". $row['work_day']. "</td>;
+		$arrData .= "<td>". $row['another_user_name']. "</td>";
+		$arrData .= "<td>". $row['work_time']. "</td>";
+		$arrData .= "<td>". $row['work_day']. "</td>";
 		$arrData .= "</tr>";
 
 		while($row = $sth->fetch(PDO::FETCH_ASSOC)){
