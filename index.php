@@ -12,7 +12,6 @@ define('T_TIME', 't_line_time_card');
 	switch ($_POST['personPage']) {
 		case $_POST['personPage'] > 0;
 			echo OK;
-			echo $_POST['personPage'];
 		break;
 		
 		default:
@@ -232,8 +231,9 @@ function floorPerTime($time, $per){
 		$arrData .= "<td>". $row['work_time']. "</td>";
 		$arrData .= "<td>". $row['work_day']. "</td>";
 		$arrData .= "<td>";
-		$arrData .= "<input type='submit' value='" . $row['another_user_name'] ."_勤務表ページへ'>";
-		$arrData .= "<input type='hidden' name='personPage' value='" . $row['user_srg'] . "'>";
+		$arrData .= "<button type='submit' name='personPage' value='" . $row['user_srg'] . "'>" . $row['another_user_name'] . "_勤務表</button>";
+		//$arrData .= "<input type='submit' value='" . $row['another_user_name'] ."_勤務表ページへ'>";
+		//$arrData .= "<input type='hidden' name='personPage' value='" . $row['user_srg'] . "'>";
 		$arrData .= "</td>";
 		$arrData .= "</tr>";
 
