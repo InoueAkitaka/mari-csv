@@ -174,7 +174,7 @@ function floorPerTime($time, $per){
 <body>
 <?php 
 	$dbh = dbConnection::getConnection();
-	$sql = 'select to_char(stamp_date, \'yyyy/mm\') as work_month from' . T_TIME . 'group by to_char(stamp_date, \'yyyy/mm\') order by work_month desc';
+	$sql = 'select to_char(stamp_date, \'yyyy/mm\') as work_month from ' . T_TIME . ' group by to_char(stamp_date, \'yyyy/mm\') order by work_month desc';
 	$sth = $dbh->prepare($sql);
 	$sth->execute();
 
