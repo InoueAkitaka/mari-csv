@@ -17,7 +17,7 @@ define('T_TIME', 't_line_time_card');
 	
 	switch ($userParam) {
 		case 1:
-			header('Location: https://test-app-csv-mari-magno.herokuapp.com//person.php', true, 307);
+			header('Location: https://test-app-csv-mari-magno.herokuapp.com//person.php', true);
 		break;
 		
 		default:
