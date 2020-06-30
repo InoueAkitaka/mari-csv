@@ -182,6 +182,7 @@ function floorPerTime($time, $per){
 		</style>
 	</head>
 <body>
+	<h2>月別勤務時間一覧</h2>
 <?php 
 	$dbh = dbConnection::getConnection();
 	$sql = 'select to_char(stamp_date, \'yyyy/mm\') as work_month from ' . T_TIME . ' group by to_char(stamp_date, \'yyyy/mm\') order by work_month desc';
@@ -234,7 +235,7 @@ function floorPerTime($time, $per){
 	}
 ?>
 	<form action="" method="post">
-		<select name="month">
+		稼働年月：<select name="month">
 			<?php echo $arrMonth; ?>
 		</select>
 		
@@ -249,7 +250,7 @@ function floorPerTime($time, $per){
 				<?php echo $arrData; ?>
 			</table>
 		</div>
-		<input type="submit" value="csvダウンロード"><br />
+		<input type="submit" value="月別CSVダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
 		<input type="hidden" name="userData" value="<?php echo $userSrg; ?>">
 	</form>
