@@ -15,6 +15,19 @@ $sql = 'select to_char(stamp_date, \'yyyy/mm\') work_month from t_line_time_card
 $sth = $dbh->prepare($sql);
 $sth->execute();
 
+$age_data = ['young'=>'10代～20代',
+             'middle'=>'30代～50代',
+             'senior'=>'60代以上'
+            ];
+// ②配列のデータをoptionタグに整形
+foreach($age_data as $age_data_key => $age_data_val){
+    $age_data .= "<option value='". $age_data_key;
+    $age_data .= "'>". $age_data_val. "</option>";
+}
+
+while($row = $sth->fetch(PDO::FETCH_ASSOC)){
+	fputcsv($fp, $row);
+}
 
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
@@ -181,7 +194,7 @@ function floorPerTime($time, $per){
 	<form action="" method="post">
 		<select>
 			<option>テスト</option>
-			<?php while($row = $sth->fetch(PDO::FETCH_ASSOC)){ echo '<option>'.htmlspecialchars($row['work_month']).'</option>'; } ?>
+			<?php $age_data ?>
 		</select>
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
