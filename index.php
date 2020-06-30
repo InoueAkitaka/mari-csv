@@ -8,7 +8,6 @@ define('T_TIME', 't_line_time_card');
 //$nowEditTime = ceilPerTime(strtotime(date("H:i:s")), 15);
 
 //echo ceilPerTime(15);
-echo 'test';
 
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
@@ -194,11 +193,46 @@ function floorPerTime($time, $per){
 		}
 	}
 
+	$sql = 'select B.user_srg , B.another_user_name , sum(leave_edit_time) - sum(attend_edit_time) as work_time , count(stamp_date) as work_day from t_line_time_card A inner join m_line_user_data B on A.user_srg = B.user_srg where stamp_date >= '2018/07/01' and stamp_date <= '2018/07/31' group by B.user_srg, B.another_user_name order by work_time desc';
+	$sth = $dbh->prepare($sql);
+	$sth->execute();
+
+	$arrData = array();
+
+	// データが存在しない場合はNULL
+	if (!($row = $sth->fetch())) {
+		echo 'データの取得に失敗しました';
+	}
+	else {
+		$arrData .= "<tr>";
+		$arrData .= "<td>". $row['another_user_name']. "</td>;
+		$arrData .= "<td>". $row['work_time']. "</td>;
+		$arrData .= "<td>". $row['work_day']. "</td>;
+		$arrData .= "</tr>";
+
+		while($row = $sth->fetch(PDO::FETCH_ASSOC)){
+			$arrData .= "<tr>";
+			$arrData .= "<td>". $row['another_user_name']. "</td>;
+			$arrData .= "<td>". $row['work_time']. "</td>;
+			$arrData .= "<td>". $row['work_day']. "</td>;
+			$arrData .= "</tr>";
+		}
+	}
 ?>
 	<form action="" method="post">
 		<select name="month">
 			<?php echo $arrMonth; ?>
 		</select>
+		
+		<table>
+			<tr>
+				<td>氏名</td>
+				<td>月合計勤務時間</td>
+				<td>出勤日数</td>
+				<td>個人別勤務時間ダウンロード</td>
+				<?php echo $arrData; ?>
+			</tr>
+		</table>
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
 		<input type="hidden" name="userData" value="<?php echo $userSrg; ?>">
