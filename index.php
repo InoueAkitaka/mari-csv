@@ -25,10 +25,6 @@ foreach($age_data as $age_data_key => $age_data_val){
     $age_data .= "'>". $age_data_val. "</option>";
 }
 
-while($row = $sth->fetch(PDO::FETCH_ASSOC)){
-	fputcsv($fp, $row);
-}
-
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
 		
