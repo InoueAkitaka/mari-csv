@@ -1,6 +1,36 @@
 <?php
-	echo $_SERVER["REQUEST_METHOD"] . '<br>';
-	var_dump($_POST);
+	$userId = $_POST['personPage'];
+	$monthData = $_POST['month'];
+
+	// 前月一日
+	//$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
+
+	// パラメータ月の一日
+	$startDate = date('Y-m-01 00:00:00', strtotime(date($monthData .'/1')));
+
+	// 前月末日
+	//$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
+
+	$endDate = date('Y-m-t 23:59:59', strtotime(date($monthData .'/1')));
+	
+	echo $startDate;
+	echo $endDate;
+
+	$dbh = dbConnection::getConnection();
+	$sql = 'select * from ' . M_USER . ' where ? = pgp_sym_decrypt(user_secret_id, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+	$sth = $dbh->prepare($sql);
+	$sth->execute(array($userId));
+
+	// データが存在しない場合はNULL
+	if (!($row = $sth->fetch())) {
+		echo 'データの取得に失敗しました' . $userId;
+	}
+	else {
+		//確認用のためコメントアウト
+		//echo json_decode($row['another_user_name']);
+		
+		$userName = json_decode($row['another_user_name']);
+	}
 
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
@@ -16,16 +46,10 @@
 			$export_header[] = $val;
 		}
 
-		// 前月一日
-		$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
-
-		// 前月末日
-		$endDate = date('Y-m-t 23:59:59', strtotime(date('Y-m-1'). '-1 month' ) );
-
 		$dbh = dbConnection::getConnection();
 		$sql = 'select stamp_date, attend_time, leave_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
 		$sth = $dbh->prepare($sql);
-		$sth->execute(array($userSrg, $startDate, $endDate));
+		$sth->execute(array($userId, $startDate, $endDate));
 
 		foreach($export_header as $data){
 			fputcsv($fp, $data);
@@ -51,8 +75,6 @@
 		fclose($fp);
 		exit();
 	}
-
-	$userId = $_GET['personPage'];
 
 // linebotのDBに接続
 // 環境変数(getenv)はherokuのappに記載する必要がある
@@ -91,3 +113,59 @@ class dbConnection {
 	}
 }
 ?>
+
+<html>
+	<head>
+		<meta charset=“UFT-8”>
+		<style>
+			#work-table table,#work-table td,#work-table th {
+				border-collapse: collapse;
+				border:1px solid #333;
+			}
+		</style>
+	</head>
+<body>
+	<h2><?php echo $username. "_勤務時間一覧" ?></h2>
+<?php 
+	$dbh = dbConnection::getConnection();
+	$sql = 'select stamp_date, attend_edit_time, leave_edit_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
+	$sth = $dbh->prepare($sql);
+	$sth->execute(array($userId, $startDate, $endDate));
+
+	$arrData = "";
+
+	// データが存在しない場合はNULL
+	if (!($row = $sth->fetch())) {
+		echo 'データの取得に失敗しました';
+	}
+	else {
+		$arrData .= "<tr>";
+		$arrData .= "<td>". $row['stamp_date']. "</td>";
+		$arrData .= "<td>". $row['attend_edit_time']. "</td>";
+		$arrData .= "<td>". $row['leave_edit_time']. "</td>";
+		$arrData .= "</tr>";
+
+		while($row = $sth->fetch(PDO::FETCH_ASSOC)){
+			$arrData .= "<tr>";
+			$arrData .= "<td>". $row['stamp_date']. "</td>";
+			$arrData .= "<td>". $row['attend_edit_time']. "</td>";
+			$arrData .= "<td>". $row['leave_edit_time']. "</td>";
+			$arrData .= "</tr>";
+		}
+	}
+?>
+	<form action="" method="post">
+		<div id="work-table">
+			<table width="100%">
+				<tr>
+					<td>出勤日</td>
+					<td>開始時刻</td>
+					<td>終了時刻</td>
+				</tr>
+				<?php echo $arrData; ?>
+			</table>
+		</div>
+		<button type='submit' name='mode' value='download'><?php echo $username. "_CSVダウンロード" ?></button>
+	</form>
+</body>
+</html>
