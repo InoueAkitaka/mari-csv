@@ -4,8 +4,6 @@ define('M_USER', 'm_line_user_data');
 define('T_TIME', 't_line_time_card');
 
 	if ( $_POST['mode'] === 'download' ) {
-		echo 'testtesttest';
-		
 		$userSrg =  $_POST['userData'];
 		$startDate =  $_POST['startPrm'];
 		$endDate =  $_POST['endPrm'];
@@ -20,7 +18,7 @@ define('T_TIME', 't_line_time_card');
 		}
 
 		$dbh = dbConnection::getConnection();
-		$sql = 'select stamp_date, attend_time, leave_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
+		$sql = 'select stamp_date, attend_edit_time, leave_edit_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
 		$sth = $dbh->prepare($sql);
 		$sth->execute(array($userSrg, $startDate, $endDate));
 
@@ -52,8 +50,6 @@ define('T_TIME', 't_line_time_card');
 	$userSrg = $_POST['personPage'];
 	$monthData = $_POST['month'];
 
-	echo "</br>" . $userSrg;
-	echo "</br>" . $monthData . "</br>";
 	// 前月一日
 	//$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
 
@@ -65,11 +61,24 @@ define('T_TIME', 't_line_time_card');
 
 	// パラメータ月の末日
 	$endDate = date('Y-m-t 23:59:59', strtotime(date($monthData .'/1')));
-	
-	echo $startDate;
-	echo $endDate;
 
 	$userName = "テストユーザ1";
+
+	$dbh = dbConnection::getConnection();
+	$sql = 'select * from ' . M_USER . ' where user_srg = ?';
+	$sth = $dbh->prepare($sql);
+	$sth->execute(array($userSrg));
+
+	// データが存在しない場合はNULL
+	if (!($row = $sth->fetch())) {
+		echo 'データの取得に失敗しました' . $userSrg;
+	}
+	else {
+		//確認用のためコメントアウト
+		echo json_decode($row['another_user_name']);
+		
+		$userName = json_decode($row['another_user_name']);
+	}
 
 // linebotのDBに接続
 // 環境変数(getenv)はherokuのappに記載する必要がある
