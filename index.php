@@ -170,6 +170,12 @@ function floorPerTime($time, $per){
 ?>
 
 <html>
+	<head>
+		<meta charset=“UFT-8”>
+		<style>
+			
+		</style>
+	</head>
 <body>
 <?php 
 	$dbh = dbConnection::getConnection();
@@ -209,6 +215,7 @@ function floorPerTime($time, $per){
 		$arrData .= "<td>". $row['another_user_name']. "</td>";
 		$arrData .= "<td>". $row['work_time']. "</td>";
 		$arrData .= "<td>". $row['work_day']. "</td>";
+		$arrData .= "<input id='test' type='button' value='test' onclick='window.open(url,'_blank')'>";
 		$arrData .= "</tr>";
 
 		while($row = $sth->fetch(PDO::FETCH_ASSOC)){
@@ -216,6 +223,7 @@ function floorPerTime($time, $per){
 			$arrData .= "<td>". $row['another_user_name']. "</td>";
 			$arrData .= "<td>". $row['work_time']. "</td>";
 			$arrData .= "<td>". $row['work_day']. "</td>";
+			$arrData .= "<input id='test' type='button' value='test' onclick='window.open(url,'_blank')'>";
 			$arrData .= "</tr>";
 		}
 	}
@@ -225,15 +233,17 @@ function floorPerTime($time, $per){
 			<?php echo $arrMonth; ?>
 		</select>
 		
-		<table>
-			<tr>
-				<td>氏名</td>
-				<td>月合計勤務時間</td>
-				<td>出勤日数</td>
-				<td>個人別勤務時間ダウンロード</td>
-			</tr>
-			<?php echo $arrData; ?>
-		</table>
+		<div id="work-table">
+			<table width="100%">
+				<tr>
+					<td>氏名</td>
+					<td>月合計勤務時間</td>
+					<td>出勤日数</td>
+					<td>個人別勤務時間ダウンロード</td>
+				</tr>
+				<?php echo $arrData; ?>
+			</table>
+		</div>
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
 		<input type="hidden" name="userData" value="<?php echo $userSrg; ?>">
