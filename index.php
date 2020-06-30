@@ -61,7 +61,8 @@ define('T_TIME', 't_line_time_card');
 
 	$userId = $_GET['page'];
 
-	echo $userId;
+	//確認用のためコメントアウト
+	//echo $userId;
 
 	$dbh = dbConnection::getConnection();
 	$sql = 'select * from ' . M_USER . ' where ? = pgp_sym_decrypt(user_secret_id, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
@@ -73,7 +74,8 @@ define('T_TIME', 't_line_time_card');
 		echo 'データの取得に失敗しました' . $userId;
 	}
 	else {
-		echo json_decode($row['user_srg']);
+		//確認用のためコメントアウト
+		//echo json_decode($row['user_srg']);
 		
 		$userSrg = json_decode($row['user_srg']);
 	}
@@ -186,7 +188,7 @@ function floorPerTime($time, $per){
 	$sth = $dbh->prepare($sql);
 	$sth->execute();
 
-	$arrMonth = array();
+	$arrMonth = "";
 
 	// データが存在しない場合はNULL
 	if (!($row = $sth->fetch())) {
@@ -207,7 +209,7 @@ function floorPerTime($time, $per){
 	$sth = $dbh->prepare($sql);
 	$sth->execute();
 
-	$arrData = array();
+	$arrData = "";
 
 	// データが存在しない場合はNULL
 	if (!($row = $sth->fetch())) {
@@ -251,7 +253,6 @@ function floorPerTime($time, $per){
 		<input type="hidden" name="mode" value="download">
 		<input type="hidden" name="userData" value="<?php echo $userSrg; ?>">
 	</form>
-	<p>test</p>
 </body>
 </html>
 
