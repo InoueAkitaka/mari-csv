@@ -181,7 +181,7 @@ function floorPerTime($time, $per){
 	<form action="" method="post">
 		<select>
 			<option>テスト</option>
-			<?php while($row = $sth->fetch(PDO::FETCH_ASSOC)){ echo '<option>'.htmlspecialchars($row['work_month']).'</option>' }; ?>
+			<?php while($row = $sth->fetch(PDO::FETCH_ASSOC)){ echo '<option>'.htmlspecialchars($row['work_month']).'</option>'; } ?>
 		</select>
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
