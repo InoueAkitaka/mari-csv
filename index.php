@@ -9,13 +9,15 @@ define('T_TIME', 't_line_time_card');
 
 //echo ceilPerTime(15);
 
-	switch ($_POST['personPage']) {
-		case $_POST['personPage'] > 0;
-			echo OK;
-		break;
-		
-		default:
-		echo '値がありません。';
+	if (is_null($_POST['personPage'])){
+		switch ($_POST['personPage']) {
+			case $_POST['personPage'] > 0;
+				echo OK;
+			break;
+			
+			default:
+			echo '値がありません。';
+		}
 	}
 
 	if ( $_POST['mode'] === 'download' ) {
