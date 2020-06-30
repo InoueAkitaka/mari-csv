@@ -18,8 +18,8 @@ $age_data = array();
 
 // ②配列のデータをoptionタグに整形
 while($row = $sth->fetch(PDO::FETCH_ASSOC)){
-    $age_data .= "<option value='". $row['work_month'];
-    $age_data .= "'>". $row['work_month']. "</option>";
+	$age_data .= "<option value='". $row['work_month'];
+	$age_data .= "'>". $row['work_month']. "</option>";
 }
 
 	if ( $_POST['mode'] === 'download' ) {
@@ -185,7 +185,7 @@ function floorPerTime($time, $per){
 <html>
 <body>
 	<form action="" method="post">
-		<select>
+		<select name="month">
 			<?php $age_data; ?>
 		</select>
 		<input type="submit" value="csvダウンロード"><br />
