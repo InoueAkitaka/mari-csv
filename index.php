@@ -13,16 +13,16 @@ define('T_TIME', 't_line_time_card');
 	
 	if (!is_null($_POST['personPage'])){
 		$userParam = intval($_POST['personPage']);
+		
+		echo "データなーしよ";
 	}
 	
 	switch ($userParam) {
 		case 2:
-		echo "OK";
-		echo $userParam;
+			
 		break;
 		
 		default:
-		echo "データなし";
 	}
 
 	if ( $_POST['mode'] === 'download' ) {
