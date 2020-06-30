@@ -10,18 +10,6 @@ define('T_TIME', 't_line_time_card');
 //echo ceilPerTime(15);
 echo 'test';
 
-$dbh = dbConnection::getConnection();
-$sql = 'select to_char(stamp_date, \'yyyy/mm\') work_month from t_line_time_card group by to_char(stamp_date, \'yyyy/mm\') order by work_month desc';
-$sth = $dbh->prepare($sql);
-
-$age_data = array();
-
-// ②配列のデータをoptionタグに整形
-while($row = $sth->fetch(PDO::FETCH_ASSOC)){
-	$age_data .= "<option value='". $row['work_month'];
-	$age_data .= "'>". $row['work_month']. "</option>";
-}
-
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
 		
@@ -184,6 +172,23 @@ function floorPerTime($time, $per){
 
 <html>
 <body>
+<?php 
+	$dbh = dbConnection::getConnection();
+	$sql = 'select to_char(stamp_date, \'yyyy/mm\') work_month from t_line_time_card group by to_char(stamp_date, \'yyyy/mm\') order by work_month desc';
+	$sth = $dbh->prepare($sql);
+
+	$age_data = array();
+
+	// データが存在しない場合はNULL
+	if (!($row = $sth->fetch())) {
+		echo 'データの取得に失敗しました' . $userId;
+	}
+
+	while($row = $sth->fetch(PDO::FETCH_ASSOC)){
+		$age_data .= "<option value='". $row['work_month'];
+		$age_data .= "'>". $row['work_month']. "</option>";
+	}
+?>
 	<form action="" method="post">
 		<select name="month">
 			<?php echo $age_data; ?>
