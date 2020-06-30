@@ -9,6 +9,15 @@ define('T_TIME', 't_line_time_card');
 
 //echo ceilPerTime(15);
 
+	switch ($_POST['personPage']) {
+		case $_POST['personPage'] > 0;
+			echo OK;
+		break;
+		
+		default:
+		echo '値がありません。';
+	}
+
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
 		
@@ -221,7 +230,10 @@ function floorPerTime($time, $per){
 		$arrData .= "<td>". $row['another_user_name']. "</td>";
 		$arrData .= "<td>". $row['work_time']. "</td>";
 		$arrData .= "<td>". $row['work_day']. "</td>";
-		$arrData .= "<td><input id='test' type='button' value='test' onclick='window.open(url,'_blank')'></td>";
+		$arrData .= "<td>";
+		$arrData .= "<input type='submit' value='" . $row['another_user_name'] ."_勤務表ページへ'>";
+		$arrData .= "<input type='hidden' name='personPage' value='" . $row['user_srg'] . "'>";
+		$arrData .= "</td>";
 		$arrData .= "</tr>";
 
 		while($row = $sth->fetch(PDO::FETCH_ASSOC)){
@@ -229,7 +241,7 @@ function floorPerTime($time, $per){
 			$arrData .= "<td>". $row['another_user_name']. "</td>";
 			$arrData .= "<td>". $row['work_time']. "</td>";
 			$arrData .= "<td>". $row['work_day']. "</td>";
-			$arrData .= "<td><input id='test' type='button' value='test' onclick='window.open(url,'_blank')'></td>";
+			$arrData .= "<td><input id='test' type='button' value='" . $row['another_user_name'] . "_勤務表' onclick='window.open(url,'_blank')'></td>";
 			$arrData .= "</tr>";
 		}
 	}
@@ -245,7 +257,7 @@ function floorPerTime($time, $per){
 					<td>氏名</td>
 					<td>月合計勤務時間</td>
 					<td>出勤日数</td>
-					<td>個人別勤務時間ダウンロード</td>
+					<td>個別勤務表</td>
 				</tr>
 				<?php echo $arrData; ?>
 			</table>
