@@ -2,8 +2,8 @@
 	echo $_SERVER["REQUEST_METHOD"] . '<br>';
 	var_dump($_POST);
 
-	$userId = $_GET['personPage'];
-	$monthData = $_GET['month'];
+	$userId = $_POST['personPage'];
+	$monthData = $_POST['month'];
 
 	// 前月一日
 	//$startDate = date('Y-m-01 00:00:00', strtotime(date('Y-m-1'). '-1 month' ) );
