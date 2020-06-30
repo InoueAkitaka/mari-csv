@@ -178,21 +178,26 @@ function floorPerTime($time, $per){
 	$sth = $dbh->prepare($sql);
 	$sth->execute();
 
-	$age_data = array();
+	$arrMonth = array();
 
 	// データが存在しない場合はNULL
 	if (!($row = $sth->fetch())) {
 		echo 'データの取得に失敗しました';
 	}
+	else {
+		$arrMonth .= "<option value='". $row['work_month'];
+		$arrMonth .= "'>". $row['work_month']. "</option>";
 
-	while($row = $sth->fetch(PDO::FETCH_ASSOC)){
-		$age_data .= "<option value='". $row['work_month'];
-		$age_data .= "'>". $row['work_month']. "</option>";
+		while($row = $sth->fetch(PDO::FETCH_ASSOC)){
+			$arrMonth .= "<option value='". $row['work_month'];
+			$arrMonth .= "'>". $row['work_month']. "</option>";
+		}
 	}
+
 ?>
 	<form action="" method="post">
 		<select name="month">
-			<?php echo $age_data; ?>
+			<?php echo $arrMonth; ?>
 		</select>
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
