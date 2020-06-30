@@ -12,12 +12,12 @@ define('T_TIME', 't_line_time_card');
 	$userParam = 0;
 	
 	if (!is_null($_POST['personPage'])){
-		$userParam = intval($_POST['personPage']);
+		$userParam = 1;
 	}
 	
 	switch ($userParam) {
-		case 2:
-			header('Location: https://test-app-csv-mari-magno.herokuapp.com//parson.php', true, 307);
+		case 1:
+			header('Location: https://test-app-csv-mari-magno.herokuapp.com//person.php', true, 307);
 		break;
 		
 		default:
