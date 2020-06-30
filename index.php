@@ -10,6 +10,14 @@ define('T_TIME', 't_line_time_card');
 //echo ceilPerTime(15);
 echo 'test';
 
+$stmt = $pdo->query('SELECT * FROM テーブル');
+
+$dbh = dbConnection::getConnection();
+$sql = 'select to_char(stamp_date, 'yyyymm') work_month from t_line_time_card group by to_char(stamp_date, 'yyyymm') order by work_month desc';
+$sth = $dbh->prepare($sql);
+$sth->execute(array($userSrg, $startDate, $endDate));
+
+
 	if ( $_POST['mode'] === 'download' ) {
 		//echo 'testtesttest';
 		
@@ -173,6 +181,9 @@ function floorPerTime($time, $per){
 <html>
 <body>
 	<form action="" method="post">
+		<select>
+			
+		</select>
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
 		<input type="hidden" name="userData" value="<?php echo $userSrg; ?>">
@@ -180,3 +191,20 @@ function floorPerTime($time, $per){
 	<p>test</p>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
