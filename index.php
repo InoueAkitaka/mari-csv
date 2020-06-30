@@ -263,8 +263,7 @@ function floorPerTime($time, $per){
 				<?php echo $arrData; ?>
 			</table>
 		</div>
-		<input type="submit" value="月別CSVダウンロード"><br />
-		<input type="hidden" name="mode" value="download">
+		<button type='submit' name='mode' value='download'>月別CSVダウンロード</button>
 		<input type="hidden" name="userData" value="<?php echo $userSrg; ?>">
 	</form>
 </body>
