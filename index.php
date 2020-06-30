@@ -12,6 +12,7 @@ define('T_TIME', 't_line_time_card');
 	switch ($_POST['personPage']) {
 		case $_POST['personPage'] > 0;
 			echo OK;
+			echo $_POST['personPage'];
 		break;
 		
 		default:
