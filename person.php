@@ -7,8 +7,8 @@ define('T_TIME', 't_line_time_card');
 		echo 'testtesttest';
 		
 		$userSrg =  $_POST['userData'];
-		$startDate =  $_POST['start'];
-		$endDate =  $_POST['end'];
+		$startDate =  $_POST['startPrm'];
+		$endDate =  $_POST['endPrm'];
 		//メモリ上に領域確保
 		$fp = fopen('php://temp/maxmemory:'.(5*1024*1024),'r+');
 
@@ -68,24 +68,6 @@ define('T_TIME', 't_line_time_card');
 	
 	echo $startDate;
 	echo $endDate;
-
-	$dbh = dbConnection::getConnection();
-	$sql = 'select * from ' . M_USER . ' where user_srg = ?';
-	$sth = $dbh->prepare($sql);
-	$sth->execute(array($userSrg));
-
-	// データが存在しない場合はNULL
-	if (!($row = $sth->fetch())) {
-		echo 'データの取得に失敗しました' . $userSrg;
-	}
-	else {
-		//確認用のためコメントアウト
-		echo json_decode($row['another_user_name']);
-		
-		$userName = json_decode($row['another_user_name']);
-		
-		echo $userName;
-	}
 
 // linebotのDBに接続
 // 環境変数(getenv)はherokuのappに記載する必要がある
@@ -177,8 +159,8 @@ class dbConnection {
 			</table>
 		</div>
 		<button type='submit' name='mode' value='download'><?php echo $userName. "_CSVダウンロード" ?></button>
-		<input type='hidden' name='start' value='<?php $startDate; ?>'>
-		<input type='hidden' name='end' value='<?php $endDate; ?>'>
+		<input type='hidden' name='startPrm' value='<?php $startDate; ?>'>
+		<input type='hidden' name='endPrm' value='<?php $endDate; ?>'>
 		<input type="hidden" name="userData" value="<?php echo $userSrg; ?>">
 	</form>
 </body>
