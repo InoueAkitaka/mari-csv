@@ -186,7 +186,7 @@ function floorPerTime($time, $per){
 <body>
 	<form action="" method="post">
 		<select name="month">
-			<?php $age_data; ?>
+			<?php echo $age_data; ?>
 		</select>
 		<input type="submit" value="csvダウンロード"><br />
 		<input type="hidden" name="mode" value="download">
