@@ -80,7 +80,7 @@ define('T_TIME', 't_line_time_card');
 	}
 	else {
 		//確認用のためコメントアウト
-		//echo json_decode($row['another_user_name']);
+		echo json_decode($row['another_user_name']);
 		
 		$userName = json_decode($row['another_user_name']);
 		
