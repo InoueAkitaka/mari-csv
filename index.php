@@ -13,19 +13,13 @@ echo 'test';
 $dbh = dbConnection::getConnection();
 $sql = 'select to_char(stamp_date, \'yyyy/mm\') work_month from t_line_time_card group by to_char(stamp_date, \'yyyy/mm\') order by work_month desc';
 $sth = $dbh->prepare($sql);
-$sth->execute();
 
-$age_data = array(
-    "foo" => "bar",
-    "bar" => "foo",
-    100   => -100,
-    -100  => 100,
-);
+$age_data = $sth->execute();
 
 // ②配列のデータをoptionタグに整形
-foreach($age_data as $age_data_key => $age_data_val){
-    $age_data .= "<option value='". $age_data_key;
-    $age_data .= "'>". $age_data_val. "</option>";
+foreach($age_data as $age_data_val){
+    $age_data .= "<option value='". $age_data_val['work_month'];
+    $age_data .= "'>". $age_data_val['work_month']. "</option>";
 }
 
 	if ( $_POST['mode'] === 'download' ) {
