@@ -22,7 +22,7 @@ define('T_TIME', 't_line_time_card');
 		$dbh = dbConnection::getConnection();
 		$sql = 'select stamp_date, attend_time, leave_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
 		$sth = $dbh->prepare($sql);
-		$sth->execute(array($userId, $startDate, $endDate));
+		$sth->execute(array($userSrg, $startDate, $endDate));
 
 		foreach($export_header as $data){
 			fputcsv($fp, $data);
@@ -73,13 +73,15 @@ define('T_TIME', 't_line_time_card');
 
 	// データが存在しない場合はNULL
 	if (!($row = $sth->fetch())) {
-		echo 'データの取得に失敗しました' . $userId;
+		echo 'データの取得に失敗しました' . $userSrg;
 	}
 	else {
 		//確認用のためコメントアウト
 		//echo json_decode($row['another_user_name']);
 		
 		$userName = json_decode($row['another_user_name']);
+		
+		echo $userName;
 	}
 
 // linebotのDBに接続
@@ -136,7 +138,7 @@ class dbConnection {
 	$dbh = dbConnection::getConnection();
 	$sql = 'select stamp_date, attend_edit_time, leave_edit_time from ' . T_TIME . ' where user_srg = ? and stamp_date >= ? and stamp_date <= ?';
 	$sth = $dbh->prepare($sql);
-	$sth->execute(array($userId, $startDate, $endDate));
+	$sth->execute(array($userSrg, $startDate, $endDate));
 
 	$arrData = "";
 
