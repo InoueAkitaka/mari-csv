@@ -18,6 +18,7 @@ define('T_TIME', 't_line_time_card');
 	switch ($userParam) {
 		case $userParam > 0;
 		echo "OK";
+		echo $userParam;
 		break;
 		
 		default:
